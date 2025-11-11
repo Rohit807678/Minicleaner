@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MINICLEANER — Clean Data Fast</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="https://cdn.coverr.co/videos/coverr-dust-particles-5996/1080p.mp4" type="video/mp4">
+  </video>
+
+  <header>
+    <button id="menuBtn" aria-label="Open menu">☰</button>
+    <div class="logo">MINICLEANER</div>
+    <nav class="desktop-nav">
+      <a href="#" data-page="home">Home</a>
+      <a href="#" data-page="cleaner">Cleaner</a>
+      <a href="#" data-page="about">About</a>
+      <a href="#" data-page="tech">Tech</a>
+      <a href="#" data-page="contact">Contact</a>
+      <a href="#" data-page="faq">FAQ</a>
+    </nav>
+  </header>
+
+  <aside id="sidebar" class="sidebar">
+    <button id="closeSidebar" aria-label="Close">×</button>
+    <a href="#" data-page="home">Home</a>
+    <a href="#" data-page="cleaner">Cleaner</a>
+    <a href="#" data-page="about">About</a>
+    <a href="#" data-page="tech">Tech</a>
+    <a href="#" data-page="contact">Contact</a>
+    <a href="#" data-page="faq">FAQ</a>
+  </aside>
+
+  <main class="container">
+    <!-- HOME -->
+    <section id="page-home" class="page active">
+      <div class="main-card">
+        <h1>Without clean data, insights fail</h1>
+        <p>Upload CSV/XLSX, fix missing values, remove duplicates, convert types, and export clean datasets in minutes.</p>
+        <button id="goCleanerBtn" class="primary-btn">Start Cleaning</button>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature">
+          <h3>Smart parsing</h3>
+          <p>Auto-detect headers, types, and delimiters for CSV and Excel files.</p>
+        </div>
+        <div class="feature">
+          <h3>One-click fixes</h3>
+          <p>Mean/median/mode imputation, forward fill, and drop empty rows.</p>
+        </div>
+        <div class="feature">
+          <h3>Duplicate control</h3>
+          <p>Remove duplicates by selected columns or full-row normalization.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLEANER -->
+    <section id="page-cleaner" class="page">
+      <div class="main-card" id="uploadCard">
+        <h2>Upload a CSV or XLSX</h2>
+        <input id="uploadFile" type="file" accept=".csv,.xlsx,.xls" />
+        <div id="uploadStatus"></div>
+        <button id="uploadBtn" class="primary-btn">Process File</button>
+      </div>
+
+      <div class="main-card" id="previewCard" style="display:none">
+        <div class="file-row">
+          <h2 id="filename"></h2>
+          <small id="filenameSmall"></small>
+          <span id="rowCount"></span>
+        </div>
+
+        <div class="controls">
+          <div class="control">
+            <h3>Columns</h3>
+            <div id="columnsContainer"></div>
+          </div>
+
+          <div class="control">
+            <h3>Duplicates</h3>
+            <label><input type="checkbox" id="removeDuplicates"> Remove duplicates</label>
+            <p class="muted">Select columns for duplicate check (optional):</p>
+            <div id="dupColsContainer"></div>
+          </div>
+
+          <div class="control">
+            <h3>Missing values</h3>
+            <label><input type="radio" name="fillMissing" value="none" checked> None</label>
+            <label><input type="radio" name="fillMissing" value="mean"> Mean</label>
+            <label><input type="radio" name="fillMissing" value="median"> Median</label>
+            <label><input type="radio" name="fillMissing" value="mode"> Mode</label>
+            <label><input type="radio" name="fillMissing" value="forward"> Forward fill</label>
+            <label><input type="radio" name="fillMissing" value="drop"> Drop rows</label>
+          </div>
+
+          <div class="control">
+            <h3>Find & Replace</h3>
+            <select id="replaceCol"></select>
+            <input id="replaceFrom" type="text" placeholder="Search for..." />
+            <input id="replaceTo" type="text" placeholder="Replace with..." />
+            <button id="replaceBtn" class="btn">Apply Replace</button>
+          </div>
+
+          <div class="control">
+            <h3>Convert to Number</h3>
+            <div id="toNumberContainer"></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="applyCleanBtn" class="primary-btn">Apply Cleaning</button>
+          <button id="downloadBtn" class="btn">Download CSV</button>
+          <button id="startOverBtn" class="btn danger">Start Over</button>
+        </div>
+
+        <div id="cleanedPreview"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="page-about" class="page">
+      <div class="main-card">
+        <h2>About</h2>
+        <p>MINICLEANER helps prepare datasets for analysis with an intuitive workflow and reliable transformations.</p>
+        <div class="team">
+          <div class="member">
+            <img src="https://i.pravatar.cc/54?img=1" alt="Team">
+            <span>Data team building fast cleaning pipelines.</span>
+          </div>
+          <div class="member">
+            <img src="https://i.pravatar.cc/54?img=2" alt="Team">
+            <span>Engineers focused on performance and accuracy.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH -->
+    <section id="page-tech" class="page">
+      <div class="main-card">
+        <h2>Tech Stack</h2>
+        <ul>
+          <li>Frontend: Vanilla JS SPA with Axios</li>
+          <li>Backend: Express, Multer, PapaParse, XLSX</li>
+          <li>Export: CSV via Papa.unparse</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="page-contact" class="page">
+      <div class="main-card">
+        <h2>Contact</h2>
+        <p>Email: shubhamarya.904@gmail.com</p>
+        <p>Phone: (123) 456-7890</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="page-faq" class="page">
+      <div class="main-card accordion faq-accordion">
+        <div class="accordion-item">
+          <button class="accordion-toggle">What file types are supported?</button>
+          <div class="accordion-content">CSV, XLS, and XLSX up to 10MB.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-toggle">Is my data stored?</button>
+          <div class="accordion-content">Files are processed in memory and not saved to disk by the backend.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 MINICLEANER</footer>
+</body>
+</html>
